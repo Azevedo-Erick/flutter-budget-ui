@@ -4,6 +4,8 @@ import 'package:flutter_budget_ui/models/category_model.dart';
 import 'package:flutter_budget_ui/models/expense_model.dart';
 import 'package:flutter_budget_ui/widgets/radial_painter_widget.dart';
 
+import 'add_spent_screen.dart';
+
 class CategoryScreen extends StatefulWidget {
   final Category category;
   CategoryScreen({Key key, @required this.category}) : super(key: key);
@@ -39,12 +41,29 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(
-                '-\$${expense.cost.toStringAsFixed(2)}',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.red),
+              Container(
+                width: 100,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  // crossAxisAlignment: CrossAxisAlignment.,
+                  children: [
+                    Text(
+                      '-\$${expense.cost.toStringAsFixed(2)}',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.red),
+                    ),
+                    GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            // print(widget.category.expenses.indexOf(expense));
+                            widget.category.expenses.remove(expense);
+                          });
+                        },
+                        child: Icon(Icons.delete)),
+                  ],
+                ),
               )
             ],
           ),
@@ -73,7 +92,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => AddSpentScreen(
+                            list: widget.category.expenses,
+                          )));
+            },
             icon: Icon(Icons.add),
             iconSize: 30,
           ),

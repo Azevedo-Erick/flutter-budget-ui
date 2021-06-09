@@ -3,6 +3,7 @@ import 'package:flutter_budget_ui/data/data.dart';
 import 'package:flutter_budget_ui/helpers/color_helper.dart';
 import 'package:flutter_budget_ui/models/category_model.dart';
 import 'package:flutter_budget_ui/models/expense_model.dart';
+import 'package:flutter_budget_ui/screens/add_screen.dart';
 import 'package:flutter_budget_ui/widgets/bar_chart_widget.dart';
 
 import 'category_screen.dart';
@@ -62,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
               LayoutBuilder(
                   builder: (BuildContext context, BoxConstraints costraints) {
                 final double maxBarWidth = costraints.maxWidth;
-                final double percent = (category.maxAmount - totalAmountSpent) /
+                double percent = (category.maxAmount - totalAmountSpent) /
                     category.maxAmount;
                 double barWidth = percent * maxBarWidth;
                 if (barWidth < 0) {
@@ -122,7 +123,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             actions: <Widget>[
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (_) => AddScreen()));
+                },
                 icon: Icon(Icons.add),
                 iconSize: 30,
               )
